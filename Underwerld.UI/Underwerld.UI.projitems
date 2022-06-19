@@ -9,6 +9,7 @@
     <Import_RootNamespace>Underwerld.UI</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)components\logo.html" />
     <Content Include="$(MSBuildThisFileDirectory)content\style.css" />
     <Content Include="$(MSBuildThisFileDirectory)index.html" />
   </ItemGroup>
