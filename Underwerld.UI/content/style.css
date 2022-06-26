@@ -16,20 +16,20 @@ html, body {
 }
 
 #console-out, #console-in {
-	width: 50%;
-	height: 50%;
 	margin: auto;
 	display: block;
+	width: 50%;
+	color: #4cff00;
+	background-color: #000;
+	border: none;
 }
 
 #console-in {
-	height: 10%;
-	font-size:2em;
+	resize:none;
+	outline:none;
 }
 
 #console-out {
-	margin-top:10em;
-	background-color:#000;
-	color:#4cff00;
-	border:1px solid #808080;
+	margin-top: 10em;
+	height: 50%;
 }
