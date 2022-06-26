@@ -40,6 +40,10 @@
 
 	reset() {
 		this.#consoleOutElement.value = "";
+	}
+
+	resetInput() {
+		this.#consoleInElement.value = "";
     }
 
 	#dateOptions = { day: "2-digit", year: "numeric", month: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" };
@@ -51,42 +55,37 @@
 
 	#error(message) {
 		this.render(`*** ${message} ***`);
-    }
+	}
 
 	#submitCommand() {
 
 		let cmd = this.#consoleInElement.value.trim();
 
-		if (this.#consoleInElement.value.trim() == "") {
+		if (cmd == "") {
 			return;
 		}
 
-		this.#consoleInElement.value = "";
+		this.resetInput();
 
 		let match = true;
 
 		let parts = cmd.split(" ");
 
-		try {
-			// Replace with config injection
-			switch (parts[0]) {
-				case "travel":
-					if (parts.length != 2) {
-						this.#error(this.#missingArgsError);
-						break;
-					}
-					this.#eventBus.pub("player-travel", { location: parts[1] })
+		// Replace with config injection
+		switch (parts[0]) {
+			case "travel":
+				if (parts.length != 2) {
+					this.#error(this.#missingArgsError);
 					break;
-				case "clear":
-					this.reset();
-					break;
-				default:
-					match = false;
-			}
-		} catch(error) {
-			this.render(error.message);
-			throw error;
-        }
+				}
+				this.#eventBus.pub("player-travel", { location: parts[1] })
+				break;
+			case "clear":
+				this.reset();
+				break;
+			default:
+				match = false;
+		}
 
 		if (!match) {
 			this.render(`unrecognised command: ${cmd}`);

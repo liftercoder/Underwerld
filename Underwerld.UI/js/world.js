@@ -11,6 +11,6 @@ export default class World {
 	}
 
 	getCity = (index) => this.#cities[index];
-	getCityByName = (cityName) => this.#cities.find(city => city.name() == cityName);
+	getCityByName = (cityName) => this.#cities.find(city => city.name().toLowerCase() == cityName.toLowerCase());
 
 }

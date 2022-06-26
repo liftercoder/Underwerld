@@ -1,40 +1,43 @@
 ﻿import UI from "./ui.js";
-import World from "./world.js";
 import Player from "./player.js";
 import EventBus from "./event-bus.js";
+import WorldController from "./world-controller.js";
+
+let errorHandler = (outputFunc, func) => {
+	try {
+		func();
+	} catch (error) {
+		outputFunc(`Error: ${error.message}`);
+		throw error;
+	}
+}
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
-	//new HtmlComponent().load("components/logo.html", document.getElementById("game-container"));
+	let eventBus = new EventBus(),
+		ui = new UI(eventBus),
+		worldController = new WorldController(ui);
 
-	let eventBus = new EventBus();
+	errorHandler((errorMessage) => {
+			ui.render(errorMessage);
+        },
+		() => {
 
-	let ui = new UI(eventBus);
+			ui.render(); // sort it out so I don't need this
 
-	ui.render();
+			worldController.create();
 
-	ui.render("loading world...");
+			ui.render("creating player...");
 
-	let world = new World();
+			let player = new Player("John Jay");
 
-	ui.render("generating cities...");
+			eventBus.sub("player-travel", (payload) => {
+				worldController.movePlayer(player, payload.location);
+			});
 
-	world.generateCities(5);
-
-	ui.render("creating player...");
-
-	let player = new Player("John Jay");
-
-	eventBus.sub("player-travel", (payload) => {
-		let city = world.getCityByName(payload.location);
-		if (!city) {
-			ui.render("invalid city name");
-			return;
+			ui.render("done");
 		}
-		if (player.travel(city)) {
-			ui.render(`${player.name()} travelled to ${city.name()}`);
-		}
-	});
-
-	ui.render("done");
+	);
 });

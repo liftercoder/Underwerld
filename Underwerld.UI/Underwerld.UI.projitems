@@ -22,5 +22,6 @@
     <None Include="$(MSBuildThisFileDirectory)js\player.js" />
     <None Include="$(MSBuildThisFileDirectory)js\ui.js" />
     <None Include="$(MSBuildThisFileDirectory)js\world.js" />
+    <None Include="$(MSBuildThisFileDirectory)js\world-controller.js" />
   </ItemGroup>
 </Project>
